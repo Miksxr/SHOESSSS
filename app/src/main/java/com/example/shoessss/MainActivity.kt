@@ -114,16 +114,44 @@ class SneakerViewModel(
     val sneakers = repository.sneakers
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    fun addDemoSneaker() {
+    fun addDemoSneakers() {
         viewModelScope.launch {
-            repository.addSneaker(
+            val sneakers = listOf(
                 SneakerEntity(
                     name = "Air Jordan 1",
                     brand = "Nike",
                     price = 25000,
                     imageUrl = "https://i.imgur.com/ZcLLrkY.jpg"
+                ),
+                SneakerEntity(
+                    name = "Yeezy Boost 350",
+                    brand = "Adidas",
+                    price = 28000,
+                    imageUrl = "https://kicksmania.ru/storage/app/uploads/public/666/ead/d30/thumb_2417_1600_1600_0_0_fit.jpeg"
+                ),
+                SneakerEntity(
+                    name = "Air Max 90",
+                    brand = "Nike",
+                    price = 19000,
+                    imageUrl = "https://lonsdale.pro/wa-data/public/shop/products/00/webp/39/59/5939/images/19646/19646.970.webp"
+                ),
+                SneakerEntity(
+                    name = "New Balance 550",
+                    brand = "New Balance",
+                    price = 17000,
+                    imageUrl = "https://amazingred.ru/upload/iblock/29a/an3a3hi6g2owhu2qqhm5qlezosj4t8nq.jpg"
+                ),
+                SneakerEntity(
+                    name = "Puma RS-X",
+                    brand = "Puma",
+                    price = 16000,
+                    imageUrl = "https://i.imgur.com/Kd8Y4wT.jpg"
                 )
             )
+
+            sneakers.forEach {
+                repository.addSneaker(it)
+            }
         }
     }
 }
@@ -142,7 +170,7 @@ fun SneakerCard(sneaker: SneakerEntity) {
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp),
+                    .height(140.dp),
                 contentScale = ContentScale.Crop
             )
 
@@ -166,7 +194,7 @@ fun SneakerScreen(viewModel: SneakerViewModel) {
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.addDemoSneaker() }) {
+            FloatingActionButton(onClick = { viewModel.addDemoSneakers() }) {
                 Icon(Icons.Default.Add, contentDescription = null)
             }
         }
